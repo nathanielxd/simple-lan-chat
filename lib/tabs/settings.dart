@@ -1,4 +1,3 @@
-import 'package:simple_lan_chat/main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -16,7 +15,6 @@ class SettingsTab extends StatefulWidget {
 class _SettingsTabState extends State<SettingsTab> {
 
   TextEditingController changePortController = TextEditingController();
-  MyHomePage myHomePage = MyHomePage();
 
   void saveSettings() async {
 
@@ -25,8 +23,8 @@ class _SettingsTabState extends State<SettingsTab> {
     prefs.setBool('isDefaultPort', Data.isDefaultPort);
     prefs.setBool('isPortChangerEnabled', Data.isPortChangerEnabled);
     prefs.setBool('isChatReversed', Data.isChatReversed);
-    prefs.setBool('isAutoSave', Data.isAutoSave);
-    prefs.setBool('useBigFont', Data.useBigFont);
+    prefs.setBool('isNotifications', Data.isNotifications);
+
     prefs.setDouble('font', Data.font);
     prefs.setInt('port', Data.port);
   }
@@ -59,18 +57,18 @@ class _SettingsTabState extends State<SettingsTab> {
               saveSettings();
             });
           })),
-          _switchListTile('Run in Background \n (COMING SOON)', Data.isAutoSave, onChanged: ((value){
+          _sliderListTile('Font Size', Data.font, 10, 20, onChanged: ((value){
             setState(() {
-              Data.isAutoSave = value;
-              if(value == true) Toast.show('The app will send notifications when getting new messages and running in background', context, duration: 6);
-              saveSettings();
+              Data.font = value;
             });
+          }), onChangeEnd: ((value){
+            saveSettings();
           })),
-          _checkboxListTile('Use Big Font', Data.useBigFont, onChanged: ((value){
+          _switchListTile('Notifications', Data.isNotifications, onChanged: ((value){
             setState(() {
-              Data.useBigFont = value;
-              if(value == true) Data.font = 18;
-              else Data.font = 14;
+              Data.isNotifications = value;
+              if(value == true) Toast.show('The app will send notifications when is minimized.', context, duration: 6);
+              saveSettings();
             });
           })),
           Divider(height: 1),
@@ -89,7 +87,7 @@ class _SettingsTabState extends State<SettingsTab> {
               saveSettings();
             });
           })),
-          _listTile('Change port', 'Change the chat port. Current: ' + Data.port.toString(), 
+          _listTile('Change port', 'Change the chat\'s port. Current: ' + Data.port.toString(), 
             enabled: Data.isPortChangerEnabled,
             onTap: (){
               showDialog(
@@ -104,7 +102,7 @@ class _SettingsTabState extends State<SettingsTab> {
             showAboutDialog(
               context: context,
               applicationName: 'Simple LAN Chat',
-              applicationVersion: '0.9.0',
+              applicationVersion: '0.9.1',
               children: [
                 Text('This app was made to act like a simple chat connected to your LAN. \n' +
                 'It listens to all UDP packets and broadcasts messages to all local addresses. \n' +
@@ -140,15 +138,6 @@ class _SettingsTabState extends State<SettingsTab> {
     );
   }
 
-  Widget _checkboxListTile(String title, bool value, {void Function(bool) onChanged}) {
-    return CheckboxListTile(
-      title: Text(title),
-      activeColor: Colors.blue,
-      value: value,
-      onChanged: onChanged
-    );
-  }
-
   Widget _listTile(String title, String subtitle, {bool enabled = true, void Function() onTap}) {
     if(subtitle != null) {
       return ListTile(
@@ -173,6 +162,27 @@ class _SettingsTabState extends State<SettingsTab> {
         onTap: onTap,
       );
     }
+  }
+
+  Widget _sliderListTile(String title, double value, double min, double max,
+  {void Function(double) onChanged, void Function(double) onChangeEnd}) {
+    return ListTile(
+      title: Text(title),
+      trailing: Container(
+        width: 220,
+        child: Row(
+          children: [
+            Text(Data.font.toInt().toString()),
+            Slider(
+              min: min, max: max,
+              value: value,
+              onChanged: onChanged,
+              onChangeEnd: onChangeEnd,
+            ),
+          ]
+        ),
+      ),
+    );
   }
 
   AlertDialog _changePortDialog() {

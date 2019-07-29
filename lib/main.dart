@@ -10,6 +10,7 @@ import 'package:toast/toast.dart';
 import 'package:dynamic_theme/dynamic_theme.dart';
 import 'data.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart' as n;
 
 void main() => runApp(MyApp());
 
@@ -52,32 +53,12 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _homePageState;
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
 
-  @override
-  void initState() {
-    super.initState();
+  AppLifecycleState appState = AppLifecycleState.resumed;
 
-    init();
-
-    checkConnection();
-    openPortStream();
-  }
-
-  void init() async {
-
-    await loadSettings();
-    await openSocket();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    textController.dispose();
-    chatController.dispose();
-    subscription.cancel();
-    Data.portStream.close();
-  }
+  n.FlutterLocalNotificationsPlugin notificationsPlugin = n.FlutterLocalNotificationsPlugin();
+  n.NotificationDetails specifics;
 
   StreamSubscription subscription;
 
@@ -87,6 +68,46 @@ class _MyHomePageState extends State<MyHomePage> {
   RawDatagramSocket socket;
   InternetAddress ia255 = InternetAddress('255.255.255.255');
   int port;
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+
+    setState(() {
+      appState = state;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addObserver(this);
+
+    initNotifications();
+    initSettingsAndSocket();
+
+    checkConnection();
+    openPortStream();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+
+    WidgetsBinding.instance.removeObserver(this);
+
+    textController.dispose();
+    chatController.dispose();
+    subscription.cancel();
+    Data.closeStream();
+  }
+
+  void initSettingsAndSocket() async {
+
+    await loadSettings();
+    await openSocket();
+  }
 
   void _globalMessage(String content) {
 
@@ -108,12 +129,40 @@ class _MyHomePageState extends State<MyHomePage> {
       Data.isDefaultPort = prefs.getBool('isDefaultPort') ?? true;
       Data.isPortChangerEnabled = prefs.getBool('isPortChangerEnabled') ?? false;
       Data.isChatReversed = prefs.getBool('isChatReversed') ?? true;
-      Data.useBigFont = prefs.getBool('useBigFont') ?? false;
+      Data.isNotifications = prefs.getBool('isNotifications') ?? true;
+
       Data.font = prefs.getDouble('font') ?? 14;
       Data.port = prefs.getInt('port') ?? 1050;
     });
   }
 
+  void initNotifications() {
+
+    var initSettingsAndroid = n.AndroidInitializationSettings('@mipmap/ic_launcher');
+    var initSettingsIOS = n.IOSInitializationSettings();
+    var initSettings = n.InitializationSettings(initSettingsAndroid, initSettingsIOS);
+    notificationsPlugin.initialize(initSettings, onSelectNotification: onNotification);
+
+    var androidSpecifics = n.AndroidNotificationDetails('1', 'LAN Chat Message', 'You received a message!',
+     importance: n.Importance.High,
+     priority: n.Priority.Low,
+     ticker: 'ticker'
+    );
+    var iOSspecifics = n.IOSNotificationDetails();
+    specifics = n.NotificationDetails(androidSpecifics, iOSspecifics);
+  }
+
+  Future onNotification(String payload) async {
+
+    appState = AppLifecycleState.resumed;
+  }
+
+  Future showNotification(String notificationMessage) async {
+
+    await notificationsPlugin.show(0, 'New Message', notificationMessage, specifics, payload: 'item x');
+  }
+
+  // Checks what type of connection you have
   void checkConnection() async {
     
     await Connectivity().checkConnectivity();
@@ -133,6 +182,7 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  // Opens a Stream for when the port is changed
   void openPortStream() async {
 
     Data.portStream.stream.listen((data){
@@ -152,21 +202,27 @@ class _MyHomePageState extends State<MyHomePage> {
 
       socket.broadcastEnabled = true;
 
-      socket.listen((data){
+      socket.listen((data) async {
 
         Datagram datagram = socket.receive();
 
-        Message message = Message(datagram.address.address, String.fromCharCodes(datagram.data), false);
+        Message message = Message(datagram.address.address, utf8.decode(datagram.data), false);
 
         setState(() {
+          
           if(Data.isChatReversed == true) {
             Data.chat.insert(0, message);
           } else {
             Data.chat.add(message);
           }
         });
+
+        if(Data.isNotifications == true && appState != AppLifecycleState.resumed) {
+          showNotification(message.content);
+        }
       });
     });
+
     _globalMessage('Connected to port ' + Data.port.toString());
   }
 

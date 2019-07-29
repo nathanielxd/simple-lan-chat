@@ -1,7 +1,7 @@
 name: simple_lan_chat
 description: A simple app that allows users on the same LAN to chat through basic UDP packets.
 
-version: '0.9.0'
+version: '0.9.1'
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -16,16 +16,11 @@ dependencies:
   toast: ^0.1.5
   dynamic_theme: ^1.0.1
   url_launcher: ^5.0.3
+  flutter_local_notifications: ^0.8.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_launcher_icons: "^0.7.2"
-  
-flutter_icons:
-  android: "launcher_icon" 
-  ios: true
-  image_path: "assets/icon.png"
 
 
 
