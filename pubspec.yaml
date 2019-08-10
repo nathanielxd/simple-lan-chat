@@ -1,7 +1,7 @@
 name: simple_lan_chat
 description: A simple app that allows users on the same LAN to chat through basic UDP packets.
 
-version: '0.9.1'
+version: '0.9.2'
 
 environment:
   sdk: ">=2.1.0 <3.0.0"

@@ -35,8 +35,7 @@ class _SettingsTabState extends State<SettingsTab> {
         title: Text('Settings'),
       ),
       resizeToAvoidBottomPadding: false,
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+      body: ListView(
         children: <Widget>[
           _header('General Settings'),
           _switchListTile('Dark Mode', Data.isDarkMode, onChanged: ((value){
@@ -102,7 +101,7 @@ class _SettingsTabState extends State<SettingsTab> {
             showAboutDialog(
               context: context,
               applicationName: 'Simple LAN Chat',
-              applicationVersion: '0.9.1',
+              applicationVersion: '0.9.2',
               children: [
                 Text('This app was made to act like a simple chat connected to your LAN. \n' +
                 'It listens to all UDP packets and broadcasts messages to all local addresses. \n' +
