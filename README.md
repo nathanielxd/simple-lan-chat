@@ -3,8 +3,8 @@
 
 An application that allow users to chat on the same Local Area Network through simple UDP packets broadcasts.
 
-` `  
-` `  
+</br>
+</br>
 
 The app requires a WiFi connection and will allow two or more people that are connected to the same network to chat in a most basic manner.
 
@@ -22,8 +22,8 @@ Type | Identifier Byte
 Text | 48
 File | 49 or higher
 
-` `  
-` `  
+</br>
+</br>
 
 ## Text messages
 These messages are broadcasted to the whole LAN therefore anybody can listen to them.
@@ -35,8 +35,8 @@ All text message packets follow the next format:
 
 Where DATA is the message itself as a byte array.
 
-` `  
-` `  
+</br>
+</br>
 
 ## File messages
 These messages are sent to only sockets that are recognized as Simple LAN Chat apps. 
@@ -59,8 +59,8 @@ name length | the length of the name of the file
 NAME        | the name of the file as a byte array
 DATA        | the file itself as a byte array
 
-` `  
-` `  
+</br>
+</br>
 
 ## Heartbeats
 You can see anyone's IP and nickname connected in the app.
