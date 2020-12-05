@@ -1,29 +1,64 @@
-name: simple_lan_chat
-description: A simple app that allows users on the same LAN to chat through basic UDP packets.
+name: awesomelanchat
+description: A new Flutter project.
 
-version: '0.9.2'
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 0.1.0+10
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
 
-  cupertino_icons: ^0.1.2
-  shared_preferences: ^0.5.3
-  connectivity: ^0.4.3
-  toast: ^0.1.5
   dynamic_theme: ^1.0.1
-  url_launcher: ^5.0.3
-  flutter_local_notifications: ^0.8.0
+  image_picker: ^0.6.7+11
+  flutter_statusbarcolor: ^0.2.3
+  shared_preferences: ^0.5.12
+  firebase_admob: ^0.10.0+2
+  in_app_purchase: ^0.3.4
+  flutter_local_notifications: ^2.0.1
+  flutter_isolate: ^1.0.0
+  fluttertoast: ^7.1.1
+  gallery_saver: ^2.0.1
+  path_provider: ^1.6.22
+  file_picker: ^2.1.0
+  open_file: ^3.0.3
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-
-
 flutter:
 
   uses-material-design: true
+
+  # To add assets to your application, add an assets section, like this:
+  # assets:
+  #   - images/a_dot_burr.jpeg
+  #   - images/a_dot_ham.jpeg
+
+  # An image asset can refer to one or more resolution-specific "variants", see
+  # https://flutter.dev/assets-and-images/#resolution-aware.
+
+  # For details regarding adding assets from package dependencies, see
+  # https://flutter.dev/assets-and-images/#from-packages
+
+  # To add custom fonts to your application, add a fonts section here,
+  # in this "flutter" section. Each entry in this list should have a
+  # "family" key with the font family name, and a "fonts" key with a
+  # list giving the asset and other descriptors for the font. For
+  # example:
+  fonts:
+    - family: OpenSans
+      fonts:
+        - asset: fonts/OpenSans-Regular.ttf
+    - family: Manrope
+      fonts:
+        - asset: fonts/Manrope-Light.ttf
+  #       - asset: fonts/TrajanPro_Bold.ttf
+  #         weight: 700
+  #
+  # For details regarding fonts from package dependencies,
+  # see https://flutter.dev/custom-fonts/#from-packages

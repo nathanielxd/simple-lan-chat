@@ -37,6 +37,11 @@
 **/android/gradlew.bat
 **/android/local.properties
 **/android/**/GeneratedPluginRegistrant.java
+**/android/app/keystore.jks
+**/android/app/google-services.json
+**/lib/logic/ad_rewards.dart
+**/lib/logic/storefront.dart
+**/lib/logic/user_preferences.dart
 
 # iOS/XCode related
 **/ios/**/*.mode1v3
