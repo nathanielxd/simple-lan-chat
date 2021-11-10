@@ -1,0 +1,45 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "simple_lan_chat",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "simple_lan_chat (profile mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "chat_theme",
+            "cwd": "packages/chat_theme",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "chat_theme (profile mode)",
+            "cwd": "packages/chat_theme",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "lan_chat",
+            "cwd": "packages/lan_chat",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "lan_chat (profile mode)",
+            "cwd": "packages/lan_chat",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        }
+    ]
+}
