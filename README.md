@@ -4,6 +4,23 @@
 
 A Flutter mobile app application that allow users to chat on the same Local Area Network through simple UDP packet broadcasts.
 
+<div style="text-align: center">
+  <table>
+    <tr>
+      <td style="text-align: center">
+        <img src="docs/screen_record_quick.gif" width="250"/>
+      </td>
+      <td style="text-align: center">
+        <img src="docs/screenshot_chat.jpg" width="250"/>
+      </td>
+      <td style="text-align: center">
+        <img src="docs/screenshot_options.jpg" width="250"/>
+      </td>
+    </tr>
+  </table>
+</div>
+
+
 ## Functionality
 The app requires a WiFi connection and will allow two or more people that are connected to the same network to chat in a most basic manner.
 
