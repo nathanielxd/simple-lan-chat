@@ -1,3 +1,4 @@
+<img src="/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" width="120" height="120"></img> 
 # Simple LAN Chat
 [![](https://img.shields.io/badge/architecture-flutterfall-yellow?style=for-the-badge)](https://github.com/nathanielxd/flutterfall) [![](https://img.shields.io/badge/get_it_on-google_play-green?style=for-the-badge)](https://play.google.com/store/apps/details?id=com.nathanielxd.SimpleLANChat)
 
