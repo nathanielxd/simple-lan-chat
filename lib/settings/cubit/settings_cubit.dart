@@ -7,18 +7,17 @@ import 'package:simple_lan_chat/settings/settings.dart';
 part 'settings_state.dart';
 
 class SettingsCubit extends Cubit<SettingsState> {
-
-  final ILanChat lanChat;
-  final SharedPreferences preferences;
-
   SettingsCubit({
     required this.lanChat,
-    required this.preferences
-  }) : super(SettingsState(
-    connections: lanChat.currentChat.connections,
-    ownConnection: lanChat.ownConnection,
-    username: UsernameInput.dirty(preferences.getString('username') ?? '')
-  )) {
+    required this.preferences,
+  }) : super(
+          SettingsState(
+            connections: lanChat.currentChat.connections,
+            ownConnection: lanChat.ownConnection,
+            username:
+                UsernameInput.dirty(preferences.getString('username') ?? ''),
+          ),
+        ) {
     lanChat.stream.listen((chat) {
       final connections = List<Connection>.from(chat.connections);
       connections.sort((a, b) => a.address.compareTo(b.address));
@@ -26,12 +25,15 @@ class SettingsCubit extends Cubit<SettingsState> {
     });
   }
 
-  void usernameChanged(String value) async {
+  final ILanChat lanChat;
+  final SharedPreferences preferences;
+
+  Future<void> usernameChanged(String value) async {
     final username = UsernameInput.dirty(value);
     emit(state.copyWith(username: username));
-    if(!state.username.invalid) {
-      preferences.setString('username', username.value);
-      lanChat.changeUsername(username.value);
+    if (!state.username.isNotValid) {
+      await preferences.setString('username', username.value);
+      await lanChat.changeUsername(username.value);
     }
   }
 }

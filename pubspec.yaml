@@ -1,37 +1,34 @@
 name: simple_lan_chat
 description: A new Flutter project.
 publish_to: none
-version: 1.4.2+22
+version: 1.4.3+23
 
 environment:
-  sdk: '>=2.12.0 <3.0.0'
+  sdk: ">=3.0.0 <4.0.0"
 
 dependencies:
-  lan_chat:
-    path: packages/lan_chat
-  file_picker: ^4.2.0
-  path_provider:
-  open_file: ^3.2.1
-
-  # Flutterfall
-  equatable:
-  formz:
-  flutter_bloc:
-
-  # UI
+  flutter:
+    sdk: flutter
+  file_picker: ^6.1.1
+  path_provider: ^2.1.1
+  open_file: ^3.3.2
+  equatable: ^2.0.5
+  formz: ^0.6.1
+  flutter_bloc: ^8.1.3
   linkwell: ^2.0.6
   dynamic_themes: ^1.1.0
-  fluttertoast:
-  timeago:
+  fluttertoast: ^8.2.3
+  timeago: ^3.6.0
+  lan_chat:
+    path: packages/lan_chat
   theme:
     path: packages/chat_theme
 
 dev_dependencies:
-  test:
   flutter_test:
     sdk: flutter
-  bloc_test:
-  flutter_lints: ^1.0.0
+  very_good_analysis: ^5.1.0
+  bloc_test: ^9.1.5
   build_runner: ^2.1.4
   mockito: ^5.0.16
 
@@ -42,7 +39,7 @@ flutter:
     - assets/
 
   fonts:
-    - family: 'Manrope'
+    - family: "Manrope"
       fonts:
         - asset: fonts/Manrope-Regular.ttf
         - asset: fonts/Manrope-Bold.ttf
