@@ -19,6 +19,7 @@ dependencies:
   dynamic_themes: ^1.1.0
   fluttertoast: ^8.2.3
   timeago: ^3.6.0
+  shared_preferences: ^2.2.2
   lan_chat:
     path: packages/lan_chat
   theme:

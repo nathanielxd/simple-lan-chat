@@ -1,7 +1,7 @@
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lan_chat/lan_chat.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simple_lan_chat/settings/settings.dart';
 
 part 'settings_state.dart';
@@ -19,8 +19,8 @@ class SettingsCubit extends Cubit<SettingsState> {
           ),
         ) {
     lanChat.stream.listen((chat) {
-      final connections = List<Connection>.from(chat.connections);
-      connections.sort((a, b) => a.address.compareTo(b.address));
+      final connections = List<Connection>.from(chat.connections)
+        ..sort((a, b) => a.address.compareTo(b.address));
       emit(state.copyWith(connections: connections));
     });
   }
