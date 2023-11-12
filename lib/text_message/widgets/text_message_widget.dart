@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:lan_chat/lan_chat.dart';
+import 'package:lan_chat_theme/lan_chat_theme.dart';
 import 'package:linkwell/linkwell.dart';
 
 class TextMessageWidget extends StatelessWidget {
@@ -30,9 +31,9 @@ class TextMessageWidget extends StatelessWidget {
             padding: const EdgeInsets.all(15),
             decoration: BoxDecoration(
               color: isOwn
-                  ? Theme.of(context).primaryColor
-                  : Theme.of(context).colorScheme.background,
-              borderRadius: BorderRadius.circular(20),
+                  ? context.colorScheme.onPrimaryContainer
+                  : context.colorScheme.surfaceVariant,
+              borderRadius: kBorderRadius,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -40,9 +41,9 @@ class TextMessageWidget extends StatelessWidget {
                 if (!isOwn)
                   Text(
                     username.isNotEmpty ? username : message.address,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 12,
-                      color: Colors.black,
+                      color: context.colorScheme.onBackground,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
@@ -50,7 +51,9 @@ class TextMessageWidget extends StatelessWidget {
                   utf8.decode(message.data.data),
                   style: TextStyle(
                     fontFamily: 'Manrope',
-                    color: isOwn ? Colors.white : Colors.black,
+                    color: isOwn
+                        ? context.colorScheme.primaryContainer
+                        : Colors.black,
                   ),
                   linkStyle: const TextStyle(
                     fontFamily: 'Manrope',

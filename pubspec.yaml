@@ -4,7 +4,7 @@ publish_to: none
 version: 1.4.3+23
 
 environment:
-  sdk: ">=3.0.0 <4.0.0"
+  sdk: ">=3.0.5 <4.0.0"
 
 dependencies:
   flutter:
@@ -13,6 +13,7 @@ dependencies:
   path_provider: ^2.1.1
   open_file: ^3.3.2
   equatable: ^2.0.5
+  url_launcher: ^6.2.1
   formz: ^0.6.1
   flutter_bloc: ^8.1.3
   linkwell: ^2.0.6
@@ -22,8 +23,8 @@ dependencies:
   shared_preferences: ^2.2.2
   lan_chat:
     path: packages/lan_chat
-  theme:
-    path: packages/chat_theme
+  lan_chat_theme:
+    path: packages/lan_chat_theme
 
 dev_dependencies:
   flutter_test:

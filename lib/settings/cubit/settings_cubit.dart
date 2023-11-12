@@ -16,6 +16,7 @@ class SettingsCubit extends Cubit<SettingsState> {
             ownConnection: lanChat.ownConnection,
             username:
                 UsernameInput.dirty(preferences.getString('username') ?? ''),
+            showDonation: preferences.getBool('showDonation') ?? true,
           ),
         ) {
     lanChat.stream.listen((chat) {
@@ -27,6 +28,11 @@ class SettingsCubit extends Cubit<SettingsState> {
 
   final ILanChat lanChat;
   final SharedPreferences preferences;
+
+  Future<void> showDonationChanged() async {
+    await preferences.setBool('showDonation', !state.showDonation);
+    emit(state.copyWith(showDonation: !state.showDonation));
+  }
 
   Future<void> usernameChanged(String value) async {
     final username = UsernameInput.dirty(value);

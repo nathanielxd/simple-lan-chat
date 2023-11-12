@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lan_chat/lan_chat.dart';
+import 'package:lan_chat_theme/lan_chat_theme.dart';
 import 'package:simple_lan_chat/file_message/file_message.dart';
 
 class FileMessageView extends StatelessWidget {
@@ -31,8 +32,8 @@ class FileMessageView extends StatelessWidget {
             padding: !isOwn ? const EdgeInsets.all(15) : EdgeInsets.zero,
             decoration: BoxDecoration(
               color: isOwn
-                  ? Theme.of(context).primaryColor
-                  : Theme.of(context).colorScheme.background,
+                  ? context.colorScheme.onPrimaryContainer
+                  : context.colorScheme.background,
               borderRadius: BorderRadius.circular(20),
             ),
             child: Column(
@@ -68,7 +69,7 @@ class FileMessageView extends StatelessWidget {
                       ),
                     ),
                     InkWell(
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: kBorderRadius,
                       child: Padding(
                         padding: const EdgeInsets.all(15),
                         child: BlocBuilder<FileMessageCubit, FileMessageStatus>(

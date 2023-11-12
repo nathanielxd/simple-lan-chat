@@ -1,4 +1,4 @@
-package com.nathanielxd.simple_lan_chat
+package com.nathanielxd.SimpleLANChat
 
 import io.flutter.embedding.android.FlutterActivity
 

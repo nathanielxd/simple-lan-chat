@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lan_chat/lan_chat.dart';
+import 'package:lan_chat_theme/lan_chat_theme.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class ConnectionWidget extends StatelessWidget {
@@ -15,10 +16,10 @@ class ConnectionWidget extends StatelessWidget {
       margin: const EdgeInsets.all(5),
       padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
-        color: isOwn ? Theme.of(context).primaryColor : null,
-        borderRadius: BorderRadius.circular(20),
+        color: isOwn ? context.colorScheme.onPrimaryContainer : null,
+        borderRadius: kBorderRadius,
         border: Border.all(
-          color: Theme.of(context).primaryColor,
+          color: context.colorScheme.onPrimaryContainer,
           width: 2.5,
         ),
       ),
@@ -30,7 +31,9 @@ class ConnectionWidget extends StatelessWidget {
               Text(
                 connection.address,
                 style: TextStyle(
-                  color: isOwn ? Colors.white : Colors.black,
+                  color: isOwn
+                      ? context.colorScheme.surface
+                      : context.colorScheme.onSurface,
                   fontSize: 15,
                 ),
               ),
@@ -39,7 +42,9 @@ class ConnectionWidget extends StatelessWidget {
                 Text(
                   connection.username!,
                   style: TextStyle(
-                    color: isOwn ? Colors.white : Colors.black,
+                    color: isOwn
+                        ? context.colorScheme.surface
+                        : context.colorScheme.onSurface,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
@@ -53,7 +58,9 @@ class ConnectionWidget extends StatelessWidget {
                     ? 'now'
                     : timeago.format(connection.lastSeen!),
             style: TextStyle(
-              color: isOwn ? Colors.white : Colors.black,
+              color: isOwn
+                  ? context.colorScheme.surface
+                  : context.colorScheme.onSurface,
               fontWeight: FontWeight.w700,
             ),
           ),

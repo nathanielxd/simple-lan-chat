@@ -2,12 +2,12 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lan_chat/lan_chat.dart';
+import 'package:lan_chat_theme/lan_chat_theme.dart';
 import 'package:simple_lan_chat/chat/chat.dart';
 import 'package:simple_lan_chat/file_message/file_message.dart';
 import 'package:simple_lan_chat/image_message/image_message.dart';
 import 'package:simple_lan_chat/settings/settings.dart';
 import 'package:simple_lan_chat/text_message/text_message.dart';
-import 'package:theme/theme.dart';
 
 class ChatView extends StatelessWidget {
   ChatView({super.key});
@@ -30,7 +30,7 @@ class ChatView extends StatelessWidget {
           if (state.errorMessage != null) {
             showDialog<void>(
               context: context,
-              builder: (_) => LanChatErrorDialog(state.errorMessage!),
+              builder: (_) => DialogError(state.errorMessage!),
             );
           }
         },
@@ -41,16 +41,16 @@ class ChatView extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(5),
                 child: Material(
-                  borderRadius: BorderRadius.circular(20),
-                  color: Theme.of(context).primaryColor,
+                  borderRadius: kBorderRadius,
+                  color: context.colorScheme.onPrimaryContainer,
                   child: Row(
                     children: [
-                      const Padding(
-                        padding: EdgeInsets.only(left: 15),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 15),
                         child: Text(
                           'Simple LAN Chat',
                           style: TextStyle(
-                            color: Colors.white,
+                            color: context.colorScheme.primaryContainer,
                             fontSize: 20,
                             fontWeight: FontWeight.w700,
                           ),
@@ -58,12 +58,12 @@ class ChatView extends StatelessWidget {
                       ),
                       const Spacer(),
                       InkWell(
-                        borderRadius: BorderRadius.circular(20),
-                        child: const Padding(
-                          padding: EdgeInsets.all(15),
+                        borderRadius: kBorderRadius,
+                        child: Padding(
+                          padding: const EdgeInsets.all(15),
                           child: Icon(
                             Icons.menu,
-                            color: Colors.white,
+                            color: context.colorScheme.primaryContainer,
                           ),
                         ),
                         onTap: () =>
@@ -89,7 +89,8 @@ class ChatView extends StatelessWidget {
                         reverse: true,
                         itemBuilder: (context, index, animation) {
                           final message = state.chat.messages[index];
-                          final isOwn = state.ownAddress == message.address;
+                          final rightSided =
+                              state.ownAddress == message.address;
                           final username = state.chat.connections
                                   .firstWhere(
                                     (element) =>
@@ -104,26 +105,30 @@ class ChatView extends StatelessWidget {
                             case MessageType.text:
                               return MessageAnimation(
                                 animation: curvedAnimation,
-                                right: isOwn,
+                                side: rightSided
+                                    ? MessageAnimationSide.right
+                                    : MessageAnimationSide.left,
                                 child: TextMessageWidget(
                                   message,
-                                  isOwn: isOwn,
+                                  isOwn: rightSided,
                                   username: username,
                                 ),
                               );
                             case MessageType.file:
                               return MessageAnimation(
                                 animation: curvedAnimation,
-                                right: isOwn,
+                                side: rightSided
+                                    ? MessageAnimationSide.right
+                                    : MessageAnimationSide.left,
                                 child: message.data.isImage
                                     ? ImageMessageWidget(
                                         message,
-                                        isOwn: isOwn,
+                                        isOwn: rightSided,
                                         username: username,
                                       )
                                     : FileMessageWidget(
                                         message,
-                                        isOwn: isOwn,
+                                        isOwn: rightSided,
                                         username: username,
                                       ),
                               );
@@ -136,85 +141,86 @@ class ChatView extends StatelessWidget {
                   ),
                 ),
               ),
-              Row(
-                children: [
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.all(5),
-                      child: Material(
-                        color: Theme.of(context).colorScheme.background,
-                        borderRadius: BorderRadius.circular(20),
-                        child: TextFormField(
-                          controller: _messageController,
-                          cursorColor: Colors.black,
-                          decoration: InputDecoration(
-                            hintText: 'enter your message',
-                            border: InputBorder.none,
-                            contentPadding: const EdgeInsets.all(15),
-                            suffixIcon: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                InkWell(
-                                  borderRadius: BorderRadius.circular(20),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(5),
-                                    child: Icon(
-                                      Icons.attach_file_sharp,
-                                      color: Theme.of(context).primaryColor,
-                                    ),
-                                  ),
-                                  onTap: () => context
-                                      .read<ChatCubit>()
-                                      .sendFile(FileType.any),
-                                ),
-                                InkWell(
-                                  borderRadius: BorderRadius.circular(20),
-                                  child: Padding(
-                                    padding:
-                                        const EdgeInsets.fromLTRB(10, 5, 15, 5),
-                                    child: Icon(
-                                      Icons.image,
-                                      color: Theme.of(context).primaryColor,
-                                    ),
-                                  ),
-                                  onTap: () => context
-                                      .read<ChatCubit>()
-                                      .sendFile(FileType.image),
-                                ),
-                              ],
-                            ),
-                          ),
-                          onChanged: (value) =>
-                              context.read<ChatCubit>().messageChanged(value),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 5, 5, 5),
-                    child: Material(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Colors.black,
-                      child: InkWell(
-                        borderRadius: BorderRadius.circular(20),
-                        onTap: () => _send(context),
-                        child: Padding(
-                          padding: const EdgeInsets.all(15),
-                          child: Image.asset(
-                            'assets/send.png',
-                            height: 22,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+              _buildTextField(context),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildTextField(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.all(5),
+            child: Material(
+              color: context.colorScheme.surfaceVariant,
+              borderRadius: kBorderRadius,
+              child: TextFormField(
+                controller: _messageController,
+                cursorColor: context.colorScheme.onPrimaryContainer,
+                decoration: InputDecoration(
+                  hintText: 'enter your message',
+                  border: InputBorder.none,
+                  contentPadding: const EdgeInsets.all(15),
+                  suffixIcon: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      InkWell(
+                        borderRadius: kBorderRadius,
+                        child: Padding(
+                          padding: const EdgeInsets.all(5),
+                          child: Icon(
+                            Icons.attach_file_sharp,
+                            color: context.colorScheme.onPrimaryContainer,
+                          ),
+                        ),
+                        onTap: () =>
+                            context.read<ChatCubit>().sendFile(FileType.any),
+                      ),
+                      InkWell(
+                        borderRadius: kBorderRadius,
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(10, 5, 15, 5),
+                          child: Icon(
+                            Icons.image,
+                            color: context.colorScheme.onPrimaryContainer,
+                          ),
+                        ),
+                        onTap: () =>
+                            context.read<ChatCubit>().sendFile(FileType.image),
+                      ),
+                    ],
+                  ),
+                ),
+                onChanged: (value) =>
+                    context.read<ChatCubit>().messageChanged(value),
+              ),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(0, 5, 5, 5),
+          child: Material(
+            borderRadius: kBorderRadius,
+            color: context.colorScheme.onPrimaryContainer,
+            child: InkWell(
+              borderRadius: kBorderRadius,
+              onTap: () => _send(context),
+              child: Padding(
+                padding: const EdgeInsets.all(15),
+                child: Image.asset(
+                  'assets/send.png',
+                  height: 22,
+                  color: context.colorScheme.primaryContainer,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

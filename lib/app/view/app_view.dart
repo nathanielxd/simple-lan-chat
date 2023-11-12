@@ -1,7 +1,7 @@
 import 'package:dynamic_themes/dynamic_themes.dart';
 import 'package:flutter/material.dart';
+import 'package:lan_chat_theme/lan_chat_theme.dart';
 import 'package:simple_lan_chat/chat/chat.dart';
-import 'package:theme/theme.dart';
 
 class AppView extends StatelessWidget {
   const AppView({super.key});
@@ -11,7 +11,7 @@ class AppView extends StatelessWidget {
     return DynamicTheme(
       themeCollection: ThemeCollection(
         themes: {
-          0: ChatThemes.light,
+          0: LanChatStyles.light,
         },
       ),
       builder: (context, theme) {

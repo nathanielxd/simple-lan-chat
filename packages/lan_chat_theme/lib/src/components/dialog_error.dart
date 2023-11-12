@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:lan_chat_theme/lan_chat_theme.dart';
 
-class LanChatErrorDialog extends StatelessWidget {
+class DialogError extends StatelessWidget {
+  const DialogError(this.message, {super.key});
 
   final String message;
-  const LanChatErrorDialog(this.message, { Key? key }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Dialog(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20)
+        borderRadius: kBorderRadius,
       ),
       child: Padding(
-        padding: const EdgeInsets.all(15),
+        padding: const EdgeInsets.all(16),
         child: Text(message),
-      )
+      ),
     );
   }
 }

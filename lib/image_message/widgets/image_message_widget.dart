@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lan_chat/lan_chat.dart';
+import 'package:lan_chat_theme/lan_chat_theme.dart';
 
 class ImageMessageWidget extends StatelessWidget {
   const ImageMessageWidget(
@@ -26,12 +27,12 @@ class ImageMessageWidget extends StatelessWidget {
             margin: const EdgeInsets.fromLTRB(5, 5, 5, 0),
             padding: !isOwn ? const EdgeInsets.all(15) : EdgeInsets.zero,
             decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.background,
+              color: context.colorScheme.background,
               borderRadius: BorderRadius.circular(20),
               border: Border.all(
                 color: isOwn
-                    ? Theme.of(context).primaryColor
-                    : Theme.of(context).colorScheme.background,
+                    ? context.colorScheme.onPrimaryContainer
+                    : context.colorScheme.background,
                 width: 2.5,
               ),
             ),
