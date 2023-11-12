@@ -1,6 +1,6 @@
 # Changelog
 
-### 1.4.3
+### 1.4.5
 - If you enjoy this app and would like more features to be implemented, please leave me a message or buy me a coffee! Thank you.
 
 ### 1.4

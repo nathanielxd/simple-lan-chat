@@ -1,7 +1,7 @@
 name: simple_lan_chat
 description: A new Flutter project.
 publish_to: none
-version: 1.4.3+23
+version: 1.4.5+25
 
 environment:
   sdk: ">=3.0.5 <4.0.0"
