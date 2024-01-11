@@ -22,7 +22,7 @@ A Flutter mobile app application that allow users to chat on the same Local Area
 
 
 ## Functionality
-The app requires a WiFi connection and will allow two or more people that are connected to the same network to chat in a most basic manner.
+The app requires a WiFi connection and will allow two or more people that are connected to the same network to chat in a simplistic manner.
 
 It opens a UDP socket, listens to all data on port 1050 and sends a UDP broadcasts to communicate. From v1.2 it also supports image sharing. The app offers a minimalist design. It can be used to have a little fun or quickly share links/images.
 
