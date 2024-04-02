@@ -2,7 +2,7 @@
 # Simple LAN Chat
 [![](https://img.shields.io/badge/architecture-flutterfall-yellow?style=for-the-badge)](https://github.com/nathanielxd/flutterfall) [![](https://img.shields.io/badge/get_it_on-google_play-green?style=for-the-badge)](https://play.google.com/store/apps/details?id=com.nathanielxd.SimpleLANChat)
 
-A Flutter mobile app application that allow users to chat on the same Local Area Network through simple UDP packet broadcasts.
+A Flutter mobile app that allow users to chat on the same Local Area Network through simple UDP packet broadcasts.
 
 <div style="text-align: center">
   <table>
