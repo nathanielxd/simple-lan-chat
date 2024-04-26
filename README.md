@@ -2,7 +2,7 @@
 # Simple LAN Chat
 [![](https://img.shields.io/badge/architecture-flutterfall-yellow?style=for-the-badge)](https://github.com/nathanielxd/flutterfall) [![](https://img.shields.io/badge/get_it_on-google_play-green?style=for-the-badge)](https://play.google.com/store/apps/details?id=com.nathanielxd.SimpleLANChat)
 
-A Flutter mobile app that allow users to chat on the same Local Area Network through simple UDP packet broadcasts.
+This lightweight local network chat app uses TCP/UDP packets, supporting text, image file sharing, client discovery, and a clean UI.
 
 <div style="text-align: center">
   <table>
@@ -20,11 +20,16 @@ A Flutter mobile app that allow users to chat on the same Local Area Network thr
   </table>
 </div>
 
+LAN Chat is a server-less local network chat app using TCP/UDP packets, supporting text, image, file sharing, client discovery, and a clean UI. You can find it on Google Play, sitting at over 5000 installs. It was built using a handcrafted LAN framework for heartbeat recognition, custom names, and text messages in local packets.
+
+This app is one of the first personal projects I have worked on, and it was initially meant to allow me to quickly share data on the network, from my phone to my PC, for example. Implementing new knowledge about local networks into an app was also fun.
+
+The project is open source and can be directly downloaded to your Android device through Google Play. Documentation on how it was built and figured out to include functionality such as file sharing and network detection can be found on GitHub.
 
 ## Functionality
-The app requires a WiFi connection and will allow two or more people that are connected to the same network to chat in a simplistic manner.
+The app requires a WiFi connection and will allow two or more people connected to the same network to chat simply.
 
-It opens a UDP socket, listens to all data on port 1050 and sends a UDP broadcasts to communicate. From v1.2 it also supports image sharing. The app offers a minimalist design. It can be used to have a little fun or quickly share links/images.
+It opens a UDP socket, listens to all data on port 1050 and sends a UDP broadcast to communicate. From v1.2, it also supports image sharing. It can be used to have a little fun or quickly share links/images.
 
 # Features
 - Instant text messages
